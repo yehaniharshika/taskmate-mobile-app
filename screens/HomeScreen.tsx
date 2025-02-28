@@ -89,7 +89,6 @@ const HomeScreen: React.FC = () => {
         }
     };
 
-
     // When a calendar date is pressed, navigate to AddTask with that date.
     const onDayPress = (day: DateData) => {
         navigation.navigate('AddTask', { selectedDate: day.dateString });
@@ -287,15 +286,13 @@ const styles = StyleSheet.create({
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#6D214F',
-        elevation: 3,
+        backgroundColor: '#FFC107',
         marginLeft: 10,
     },
     addButton: {
         position: 'absolute',
         bottom: 20,
-        left: '50%',
-        marginLeft: -25,
+        right: 20,
     },
     modalContainer: {
         flex: 1,
@@ -304,31 +301,37 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContent: {
-        width: '80%',
-        padding: 20,
         backgroundColor: 'white',
+        padding: 20,
         borderRadius: 10,
+        width: '80%',
+        alignItems: 'center',
     },
     input: {
         height: 40,
         borderColor: '#ccc',
         borderWidth: 1,
-        marginBottom: 15,
+        borderRadius: 5,
+        marginBottom: 10,
         paddingLeft: 10,
+        width: '100%',
     },
     modalActions: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
+        width: '100%',
     },
     modalButton: {
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#2196F3',
         padding: 10,
         borderRadius: 5,
-        width: '48%',
+        marginTop: 10,
+        width: '45%',
+        alignItems: 'center',
     },
     modalButtonText: {
-        color: 'white',
-        textAlign: 'center',
+        color: '#fff',
+        fontSize: 16,
     },
 });
 

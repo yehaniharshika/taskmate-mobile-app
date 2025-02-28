@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import {Image, View} from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
@@ -25,8 +25,14 @@ const AuthScreen = () => {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#f8f9fa' }}>
-            <Card style={{ padding: 20, borderRadius: 10 }}>
-                <Text variant="headlineMedium" style={{ textAlign: 'center', marginBottom: 20 }}>
+            <View style={{ alignItems: 'center', marginBottom: 20 }}>
+                <Image
+                    source={require('../assets/screen.png')} // Replace with your image path
+                    style={{ width: 410, height: 350}} // Style for the image
+                />
+            </View>
+            <Card style={{ padding: 20, borderRadius: 10 ,backgroundColor: "pink" }}>
+                <Text variant="headlineMedium" style={{ textAlign: 'center', marginBottom: 20 ,fontWeight:"bold"}}>
                     Login
                 </Text>
                 <TextInput
