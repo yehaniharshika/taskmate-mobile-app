@@ -1,16 +1,12 @@
-import React, { useState, useEffect, FC } from 'react';
-import { StyleSheet, ScrollView, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, ScrollView } from 'react-native';
 import { TextInput, Button, Text, Card } from 'react-native-paper';
 import { useNavigation, NavigationProp, useRoute, RouteProp } from '@react-navigation/native';
 import { v4 as uuidv4 } from 'uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MainTabParamList } from "../navigation/types"; // Adjust this import path if needed
+import { MainTabParamList } from "../navigation/types"; // Adjust import if needed
 
-// Font Imports - "npx expo install @expo-google-fonts/ubuntu expo-font expo-splash-screen"
-import { useFonts, Ubuntu_400Regular } from '@expo-google-fonts/ubuntu';
-import * as SplashScreen from 'expo-splash-screen';
-
-const AddTaskScreen: FC = () => {
+const AddTaskScreen = () => {
     const navigation = useNavigation<NavigationProp<MainTabParamList>>();
     const route = useRoute<RouteProp<MainTabParamList, 'AddTask'>>();
     const { selectedDate, description: initialDescription, time: initialTime } = route.params || {
@@ -22,25 +18,6 @@ const AddTaskScreen: FC = () => {
     const [description, setDescription] = useState<string>(initialDescription || '');
     const [selectedDateState, setSelectedDate] = useState<string>(selectedDate || '');
     const [time, setTime] = useState<string>(initialTime || '');
-
-    // Load Ubuntu Font
-    const [fontsLoaded] = useFonts({
-        Ubuntu_400Regular,
-    });
-
-    useEffect(() => {
-        const prepare = async () => {
-            if (fontsLoaded) {
-                await SplashScreen.hideAsync();
-            }
-        };
-        prepare();
-    }, [fontsLoaded]);
-
-
-    if (!fontsLoaded) {
-        return null;
-    }
 
     useEffect(() => {
         if (!selectedDateState) {
@@ -64,6 +41,7 @@ const AddTaskScreen: FC = () => {
                 let existingTasks: any[] = [];
                 if (existingTasksJson) {
                     const parsed = JSON.parse(existingTasksJson);
+                    // If parsed data is not an array, wrap it in an array.
                     existingTasks = Array.isArray(parsed) ? parsed : [parsed];
                 }
                 const updatedTasks = [...existingTasks, newTask];
@@ -82,7 +60,7 @@ const AddTaskScreen: FC = () => {
                     What are your planning😇
                 </Text>
                 <TextInput
-                    label="Task Description"
+                    label="Add your task here..."
                     value={description}
                     onChangeText={setDescription}
                     mode="outlined"
@@ -118,29 +96,30 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 20,
         paddingVertical: 30,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: 'pink',
     },
+
     card: {
         padding: 20,
         borderRadius: 10,
         elevation: 4,
         backgroundColor: '#fff',
     },
+
     heading: {
         textAlign: 'center',
         marginBottom: 20,
         fontWeight: 'bold',
         color: '#333',
-        fontFamily: 'Ubuntu_400Regular',
+        fontSize: 18
     },
+
     input: {
         marginBottom: 15,
-        fontFamily: 'Ubuntu_400Regular',
     },
     textArea: {
         height: 100,
         textAlignVertical: 'top',
-        fontFamily: 'Ubuntu_400Regular',
     },
     button: {
         marginTop: 10,

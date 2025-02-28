@@ -59,18 +59,25 @@ const HomeScreen: React.FC = () => {
             const keys = await AsyncStorage.getAllKeys();
             const entries = await AsyncStorage.multiGet(keys);
             const groupedEntries: { [date: string]: Task[] } = {};
+
             entries.forEach(([key, value]) => {
                 if (value) {
-                    const tasks = JSON.parse(value);
-                    if (Array.isArray(tasks)) {
-                        groupedEntries[key] = tasks;
-                    } else if (tasks && typeof tasks === 'object') {
-                        // For backward compatibility if stored as a single task
-                        groupedEntries[key] = [tasks];
+                    try {
+                        const tasks = JSON.parse(value);
+                        if (Array.isArray(tasks)) {
+                            groupedEntries[key] = tasks;
+                        } else if (tasks && typeof tasks === 'object') {
+                            // For backward compatibility if stored as a single task
+                            groupedEntries[key] = [tasks];
+                        }
+                    } catch (error) {
+                        console.error(`Error parsing value for key ${key}:`, error);
                     }
                 }
             });
+
             setSavedEntries(groupedEntries);
+
             // Mark dates that have tasks
             const marks: any = {};
             Object.keys(groupedEntries).forEach((date) => {
@@ -81,6 +88,7 @@ const HomeScreen: React.FC = () => {
             console.error('Error loading saved entries:', error);
         }
     };
+
 
     // When a calendar date is pressed, navigate to AddTask with that date.
     const onDayPress = (day: DateData) => {
@@ -142,7 +150,7 @@ const HomeScreen: React.FC = () => {
 
     return (
         <View style={[styles.container, { backgroundColor: 'pink' }]}>
-            <Text style={styles.screenTitle}>Welcome to TaskMate</Text>
+            <Text style={styles.screenTitle}>Welcome to TaskMate😍</Text>
             {/* Calendar Card */}
             <Card style={[styles.card, { backgroundColor: '#FFF9F9' }]}>
                 <Calendar
@@ -165,7 +173,7 @@ const HomeScreen: React.FC = () => {
                                         <Ionicons
                                             name={task.completed ? 'checkbox' : 'square-outline'}
                                             size={24}
-                                            color="green"
+                                            color="black"
                                         />
                                     </TouchableOpacity>
                                     <Text style={[styles.taskText, task.completed && styles.taskCompleted]}>
@@ -173,10 +181,10 @@ const HomeScreen: React.FC = () => {
                                     </Text>
                                     <View style={styles.taskActions}>
                                         <TouchableOpacity onPress={() => onUpdatePress(task)} style={styles.iconButton}>
-                                            <Ionicons name="pencil" size={24} color="white" />
+                                            <Ionicons name="pencil" size={20} color="white" />
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => handleDelete(date, task.id)} style={styles.iconButton}>
-                                            <Ionicons name="trash" size={24} color="white" />
+                                            <Ionicons name="trash" size={20} color="white" />
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -279,7 +287,7 @@ const styles = StyleSheet.create({
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#6D214F',
         elevation: 3,
         marginLeft: 10,
     },
